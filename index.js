@@ -10,7 +10,13 @@ documentReady(() => {
   const getAuth0Token = () => {
     if ( window.getAuth0Client ) {
       return window.getAuth0Client().then(client => {
-        return client.getTokenSilently()
+        return client.getUser().then(user => {
+          if ( user ) {
+            return client.getTokenSilently()
+          } else {
+            return undefined
+          }
+        })
       })
     } else {
       return Promise.resolve(undefined)
@@ -44,20 +50,16 @@ documentReady(() => {
 
   callLambdaButton.addEventListener("click", () => {
     window.fetch(
-      "https://44g5tybeo1.execute-api.eu-central-1.amazonaws.com/default/valuecase-bubble-auth0-token-validator"+
+      "https://ohqzl3ca3k.execute-api.eu-central-1.amazonaws.com/default/valuecase-bubble-auth0-token-validator"+
       "?auth0_token="+encodeURIComponent(auth0Token || ""),
-      {
-        headers: {
-          "X-api-key": "UhP5MWydh82ZXVeOXTyNaaHDtYkI7roD4D6Nd6Ud"
-        }
-      }
+      {}
     ).then(response => {
       return response.json()
     }).then(json => {
-      lambdaOutput.innerText = JSON.stringify(json, null, 4)
+      lambdaOutput.value = JSON.stringify(json, null, 2)
     })
   })
 
   tokenOutput.innerText = "--none--"
-  lambdaOutput.innerText = "--none--"
+  lambdaOutput.value = "--none--"
 });

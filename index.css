@@ -3,8 +3,13 @@ h1 {
   font-weight: bolder;
 }
 
-div.output {
+.output {
   border: 1px solid gray;
   padding: 1rem;
   border-radius: 0.5rem;
+}
+
+textarea.output {
+  width: 90%;
+  min-height: 50vh;
 }
