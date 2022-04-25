@@ -1,0 +1,10 @@
+h1 {
+  color: red;
+  font-weight: bolder;
+}
+
+div.output {
+  border: 1px solid gray;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
